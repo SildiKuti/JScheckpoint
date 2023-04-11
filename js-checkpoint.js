@@ -7,25 +7,35 @@ form.addEventListener("submit",function (event) {
     const surname = document.getElementById("surname").value;
     const email = document.getElementById("email").value;
     const age = document.getElementById("age").value;
+    let gender;
+     if (document.getElementById('male').checked) {
+        gender = document.getElementById('male').value;
+      }
+      if (document.getElementById('female').checked) {
+        gender = document.getElementById('female').value;
+      }
+    
 
-formValidation(name,surname,email,age);
+
+formValidation(name,surname,email,age,gender);
+
 
 
 
 const promise = () =>{
     return new Promise((resolve, reject) => {
-        if (formValidation(name,surname,email,age)==true) {
-            resolve()
+        if (formValidation(name,surname,email,age)) {
+            resolve("succesful")
             
         }
-       else{ reject()
+       else{ reject("Error")
        }       
     })
 } 
 
 promise()
-.then((name,surname,email,age) => {
-    addAttendee(name,surname,email,age);
+.then(() => {
+    return addAttendee(name,surname,email,age,gender);
     
 }).catch((error) => {
    return alert(error);
@@ -46,13 +56,13 @@ function formValidation(name,surname,email,age) {
         return false;
     }
 }
-function addAttendee(name,surname,email,age) {
+function addAttendee(name,surname,email,age,gender) {
     
     let attende = document.getElementById("attendees").innerHTML+=`
 <li class="list-group-item d-flex justify-content-between align-items-start">
     <div class="ms-2 me-auto">
         <div class="fw-bold">${name} ${surname} ${age}</div>
-        ${email},
+        ${email}, ${gender}
     </div>
     <span class="badge bg-primary rounded-pill">M</span>
 </li>`
